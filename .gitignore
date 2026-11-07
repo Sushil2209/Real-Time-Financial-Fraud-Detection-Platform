@@ -1,0 +1,13 @@
+.venv/
+.venv-feast/
+data/
+mlruns/
+mlflow.db
+*.joblib
+*.pt
+__pycache__/
+*.pyc
+models/
+=
+*.pkl
+*.db

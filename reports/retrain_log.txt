@@ -1,0 +1,15 @@
+2026-11-04T12:24:07+05:30 Retraining needed: drift share 0.341463 exceeds 0.300000.
+2026-11-04T12:24:07+05:30 Starting candidate training without changing the current model or metrics.
+2026-11-04T12:24:51+05:30 Candidate accepted: PR-AUC 0.457611 meets required 0.457611 (current 0.457611, gain 0.000000).
+2026-11-04T12:24:51+05:30 Backed up current model to C:\Realtime-fraud-platform\models\backup\xgb_model_20261104_122451_151131.joblib.
+2026-11-04T12:24:51+05:30 Promoted candidate model and updated current metrics to PR-AUC 0.457611.
+2026-11-04T12:32:32+05:30 Retraining needed: drift share 0.463415 exceeds 0.300000.
+2026-11-04T12:32:32+05:30 Starting candidate training without changing the current model or metrics.
+2026-11-04T12:33:03+05:30 Candidate accepted: PR-AUC 0.457611 meets required 0.457611 (current 0.457611, gain 0.000000).
+2026-11-04T12:33:03+05:30 Backed up current model to C:\Realtime-fraud-platform\models\backup\xgb_model_20261104_123303_843894.joblib.
+2026-11-04T12:33:03+05:30 Promoted candidate model and updated current metrics to PR-AUC 0.457611.
+2026-11-04T12:35:08+05:30 Retraining needed: drift share 0.341463 exceeds 0.300000.
+2026-11-04T12:35:08+05:30 Starting candidate training without changing the current model or metrics.
+2026-11-04T12:35:41+05:30 Candidate accepted: PR-AUC 0.457611 meets required 0.457611 (current 0.457611, gain 0.000000).
+2026-11-04T12:35:41+05:30 Backed up current model to C:\Realtime-fraud-platform\models\backup\xgb_model_20261104_123541_960651.joblib.
+2026-11-04T12:35:41+05:30 Promoted candidate model and updated current metrics to PR-AUC 0.457611.

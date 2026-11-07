@@ -1,0 +1,12 @@
+.venv/
+.venv-feast/
+data/raw/
+mlruns/
+.git/
+notebooks/
+__pycache__/
+*.py[cod]
+models/*
+!models/xgb_model.joblib
+data/processed/*
+!data/processed/scored.db

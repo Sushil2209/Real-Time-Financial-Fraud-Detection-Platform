@@ -1,0 +1,4 @@
+{
+  "drift_share_threshold": 0.3,
+  "min_pr_auc_gain": 0.0
+}

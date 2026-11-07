@@ -1,0 +1,15 @@
+FROM python:3.12-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir streamlit==1.66.1 pandas==2.3.3
+
+COPY src/dashboard.py ./src/dashboard.py
+COPY data/processed/scored.db ./data/processed/scored.db
+
+EXPOSE 8501
+
+CMD ["streamlit", "run", "src/dashboard.py", "--server.address=0.0.0.0", "--server.port=8501"]

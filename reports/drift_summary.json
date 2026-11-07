@@ -1,0 +1,19 @@
+{
+  "share_of_drifted_columns": 0.34146341463414637,
+  "drifted_columns": [
+    "txn_count_24h",
+    "TransactionAmt",
+    "R_emaildomain",
+    "D4",
+    "D6",
+    "D7",
+    "D8",
+    "D9",
+    "D10",
+    "D11",
+    "D12",
+    "D13",
+    "D14",
+    "D15"
+  ]
+}
