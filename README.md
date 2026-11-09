@@ -23,6 +23,7 @@ See [docs/architecture.md](docs/architecture.md) for the component flow and curr
 - **Streamlit** — fraud review dashboard with case feedback.
 - **Docker / Docker Compose** — Kafka container configuration and API, dashboard, and Feast Dockerfiles.
 - **Kubernetes** — a `k8s/` folder exists, but it currently contains no manifests.
+- **Git LFS** — stores the large dataset files in this repository.
 
 ## 4. Project structure
 
@@ -30,13 +31,13 @@ See [docs/architecture.md](docs/architecture.md) for the component flow and curr
 .
 ├── config/          # Drift and retraining thresholds
 ├── data/
-│   ├── raw/         # Downloaded IEEE-CIS CSV files (not included in the repository)
-│   └── processed/   # Merged data, features, graph, scores, and SQLite results
+│   ├── raw/         # IEEE-CIS CSV files (stored with Git LFS)
+│   └── processed/   # merged.parquet (Git LFS); features, graph, and GNN scores
 ├── docker/          # Dockerfiles and Kafka Docker Compose configuration
 ├── docs/            # Architecture documentation
 ├── feature_repo/    # Feast feature definitions and local store configuration
 ├── k8s/             # Empty; Kubernetes manifests are not present
-├── models/          # Saved XGBoost and GNN models, plus retraining backups
+├── models/          # Saved XGBoost and GNN models, plus retraining backups (generated locally)
 ├── notebooks/       # EDA and data merge notebook
 ├── reports/         # Model metrics, drift reports, and retraining log
 ├── scripts/         # PowerShell start/stop scripts
@@ -44,11 +45,30 @@ See [docs/architecture.md](docs/architecture.md) for the component flow and curr
 └── tests/           # Python unittest suite
 ```
 
-`data/processed/`, model files, and local MLflow tracking data are generated or local runtime artifacts. The IEEE-CIS dataset is not included; download it separately as described below.
+Trained model files, `mlruns/`, `mlflow.db` and the two virtual environments are not committed; they are created locally by the steps below. The large data files are stored with Git LFS (see the next section).
 
 ## 5. Setup (Windows, PowerShell)
 
 Run commands from the project root. Python 3.12 is required.
+
+### Get the code and data (Git LFS)
+
+The raw IEEE-CIS CSV files (about 680 MB) and `data/processed/merged.parquet` are stored with [Git LFS](https://git-lfs.com/). Install Git LFS before cloning:
+
+```powershell
+git lfs install
+git clone https://github.com/Sushil2209/Real-Time-Financial-Fraud-Detection-Platform.git
+```
+
+To clone without downloading the large files, then fetch them only when needed:
+
+```powershell
+$env:GIT_LFS_SKIP_SMUDGE=1
+git clone https://github.com/Sushil2209/Real-Time-Financial-Fraud-Detection-Platform.git
+git lfs pull
+```
+
+The data comes from the [IEEE-CIS Fraud Detection](https://www.kaggle.com/competitions/ieee-fraud-detection) competition on Kaggle. If you prefer to download it yourself, see "Download the IEEE-CIS data" below.
 
 ### Create the main environment
 
@@ -71,7 +91,7 @@ py -3.12 -m venv .venv-feast
 .\.venv-feast\Scripts\python.exe -m pip install -r requirements-feast.txt
 ```
 
-### Download the IEEE-CIS data
+### Download the IEEE-CIS data (only if you did not pull it with Git LFS)
 
 The Kaggle account must have access to the IEEE-CIS Fraud Detection competition and the Kaggle CLI must be authenticated. Install the CLI into the project environment if needed:
 
@@ -102,7 +122,7 @@ The notebook reads both raw CSV files, explores class balance and missing values
 .\.venv\Scripts\python.exe -m jupyter lab notebooks\01_eda.ipynb
 ```
 
-Run the notebook cells in order and save the notebook after the final cell.
+Run the notebook cells in order and save the notebook after the final cell. If you pulled `merged.parquet` with Git LFS, you can skip this step.
 
 ### 2. Build transaction features
 
@@ -228,6 +248,7 @@ PR-AUC is used because the fraud class is highly imbalanced. The saved XGBoost m
 - The retraining trigger currently trains on the same data and split as the existing pipeline; it is not a new-data retraining process.
 - The `k8s/` directory is currently empty, so Kubernetes manifests are not available in this repository. The demo runs as local processes because Minikube was not reliable on the 8 GB development laptop.
 - The Docker Compose configuration starts Kafka only. The API, Feast service, and dashboard are started as local processes by `scripts/start_all.ps1`.
+- The dataset is stored with Git LFS, which has a monthly download limit on free GitHub accounts, so avoid repeated full clones.
 
 ## 9. Testing
 
